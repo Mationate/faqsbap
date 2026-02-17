@@ -2,14 +2,39 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;
-    scroll-padding-top: 5rem;
+    scroll-padding-top: 8rem;
+    overflow-x: hidden;
+  }
+
+  @media (min-width: 1024px) {
+    html {
+      scroll-padding-top: 5rem;
+    }
   }
 
   body {
     @apply font-sans text-gray-800 bg-stone-50 antialiased;
+    overflow-x: hidden;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  /* SVG icon sizing — inherit container dimensions */
+  [aria-hidden="true"] > svg {
+    width: 100%;
+    height: 100%;
   }
 
   /* Accordion transitions */
@@ -37,7 +62,7 @@
 
 @layer components {
   .category-pill {
-    @apply px-4 py-2 rounded-full text-sm font-medium transition-all duration-200;
+    @apply px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium transition-all duration-200;
     @apply bg-white text-gray-600 border border-gray-200;
     @apply hover:border-bosque-300 hover:text-bosque-700 hover:bg-bosque-50;
   }
@@ -111,9 +136,11 @@
     transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
   }
 
-  .faq-item:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  @media (hover: hover) {
+    .faq-item:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    }
   }
 
   .faq-item[open] {

@@ -1,29 +1,29 @@
 ---
 import SearchBar from './SearchBar.astro';
 ---
-<section class="relative bg-gradient-to-b from-bosque-800 via-bosque-700 to-bosque-600 text-white overflow-hidden">
+<section class="relative bg-gradient-to-b from-bosque-800 via-bosque-700 to-bosque-600 text-white overflow-hidden max-w-full">
   <!-- Decorative background -->
   <div class="absolute inset-0 opacity-10">
     <svg class="absolute bottom-0 left-0 w-full" viewBox="0 0 1440 200" fill="none">
       <path d="M0,160 C360,80 720,200 1080,120 C1260,80 1380,140 1440,100 L1440,200 L0,200 Z" fill="currentColor" />
     </svg>
-    <svg class="absolute top-10 right-10 w-64 h-64 text-white opacity-20" viewBox="0 0 200 200">
+    <svg class="absolute top-10 right-10 w-32 sm:w-64 h-32 sm:h-64 text-white opacity-20" viewBox="0 0 200 200">
       <circle cx="100" cy="100" r="80" stroke="currentColor" stroke-width="0.5" fill="none" />
       <circle cx="100" cy="100" r="60" stroke="currentColor" stroke-width="0.5" fill="none" />
       <circle cx="100" cy="100" r="40" stroke="currentColor" stroke-width="0.5" fill="none" />
     </svg>
   </div>
 
-  <div class="hero-content relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 text-center">
-    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/15 backdrop-blur-sm text-sm mb-6">
+  <div class="hero-content relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-24 text-center">
+    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/15 backdrop-blur-sm text-xs sm:text-sm mb-4 sm:mb-6">
       <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
       Proceso de traspaso en curso
     </div>
-    <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold mb-4 leading-tight tracking-tight">
+    <h1 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold mb-3 sm:mb-4 leading-tight tracking-tight">
       Preguntas Frecuentes<br />
       <span class="text-bosque-200">Traspaso CONAF → SBAP</span>
     </h1>
-    <p class="text-lg sm:text-xl text-bosque-100 mb-10 max-w-2xl mx-auto leading-relaxed">
+    <p class="text-base sm:text-xl text-bosque-100 mb-8 sm:mb-10 max-w-2xl mx-auto leading-relaxed">
       Respuestas a las principales consultas de funcionarios sobre el traspaso institucional al Servicio de Biodiversidad y Áreas Protegidas bajo la Ley 21.600.
     </p>
     <SearchBar />

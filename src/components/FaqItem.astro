@@ -14,13 +14,13 @@ const { id, question, answer, regions, relatedArticles, isOfficial } = Astro.pro
   class="faq-item group border border-gray-200 rounded-xl bg-white hover:border-bosque-200 transition-colors"
   data-question-id={id}
 >
-  <summary class="flex items-start gap-3 p-5 select-none">
+  <summary class="flex items-start gap-2.5 sm:gap-3 p-3.5 sm:p-5 select-none">
     <svg class="faq-chevron w-5 h-5 text-bosque-500 mt-0.5 shrink-0 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
     </svg>
     <div class="flex-1 min-w-0">
-      <div class="flex flex-wrap items-center gap-2">
-        <h3 class="text-base font-semibold text-gray-800 group-open:text-bosque-700 transition-colors faq-question-text">
+      <div class="flex flex-wrap items-start gap-2">
+        <h3 class="text-sm sm:text-base font-semibold text-gray-800 group-open:text-bosque-700 transition-colors faq-question-text">
           {question}
         </h3>
         {isOfficial && (
@@ -35,15 +35,16 @@ const { id, question, answer, regions, relatedArticles, isOfficial } = Astro.pro
     </div>
   </summary>
   <div class="faq-answer">
-    <div class="px-5 pb-5">
-      <div class="border-t border-gray-100 pt-4 ml-8">
-        <p class="text-gray-600 leading-relaxed faq-answer-text">{answer}</p>
+    <div class="px-3.5 pb-3.5 sm:px-5 sm:pb-5">
+      <div class="border-t border-gray-100 pt-3 sm:pt-4 ml-[30px] sm:ml-8">
+        <p class="text-sm sm:text-base text-gray-600 leading-relaxed faq-answer-text">{answer}</p>
 
         {(relatedArticles && relatedArticles.length > 0) && (
           <div class="mt-4 flex flex-wrap gap-2">
             {relatedArticles.map(article => (
-              <span class="inline-flex items-center px-2.5 py-1 rounded-md bg-bosque-50 text-bosque-700 text-xs font-medium">
-                📄 {article}
+              <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-bosque-50 text-bosque-700 text-xs font-medium">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="shrink-0"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"/><path d="M14 2v5a1 1 0 0 0 1 1h5M10 9H8m8 4H8m8 4H8"/></svg>
+                {article}
               </span>
             ))}
           </div>

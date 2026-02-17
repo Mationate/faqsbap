@@ -15,12 +15,30 @@ export interface FaqCategory {
   questions: FaqQuestion[];
 }
 
+const icons = {
+  coins: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><circle cx="8" cy="8" r="6"/><path d="M18.09 10.37A6 6 0 1 1 10.34 18M7 6h1v4"/><path d="m16.71 13.88l.7.71l-2.82 2.82"/></svg>',
+  landmark: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M10 18v-7m1.12-8.802a2 2 0 0 1 1.76.006l7.866 3.847c.476.233.31.949-.22.949H3.474c-.53 0-.695-.716-.22-.949zM14 18v-7m4 7v-7M3 22h18M6 18v-7"/></svg>',
+  scale: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M12 3v18m7-13l3 8a5 5 0 0 1-6 0zV7"/><path d="M3 7h1a17 17 0 0 0 8-2a17 17 0 0 0 8 2h1M5 8l3 8a5 5 0 0 1-6 0zV7m2 14h10"/></svg>',
+  users: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M16 3.128a4 4 0 0 1 0 7.744M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/></svg>',
+  search: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="m21 21l-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg>',
+  trendingUp: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M16 7h6v6"/><path d="m22 7l-8.5 8.5l-5-5L2 17"/></svg>',
+  network: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><rect width="6" height="6" x="16" y="16" rx="1"/><rect width="6" height="6" x="2" y="16" rx="1"/><rect width="6" height="6" x="9" y="2" rx="1"/><path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3m-7-4V8"/></svg>',
+  scrollText: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M15 12h-5m5-4h-5m9 9V5a2 2 0 0 0-2-2H4"/><path d="M8 21h12a2 2 0 0 0 2-2v-1a1 1 0 0 0-1-1H11a1 1 0 0 0-1 1v1a2 2 0 1 1-4 0V5a2 2 0 1 0-4 0v2a1 1 0 0 0 1 1h3"/></svg>',
+  building: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M10 12h4m-4-4h4m0 13v-3a2 2 0 0 0-4 0v3"/><path d="M6 10H4a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-2"/><path d="M6 21V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v16"/></svg>',
+  shieldCheck: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12l2 2l4-4"/></svg>',
+  leaf: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8c0 5.5-4.78 10-10 10"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>',
+  handshake: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="m11 17l2 2a1 1 0 1 0 3-3"/><path d="m14 14l2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4"/><path d="m21 3l1 11h-2M3 3L2 14l6.5 6.5a1 1 0 1 0 3-3M3 4h8"/></svg>',
+  fileText: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"/><path d="M14 2v5a1 1 0 0 0 1 1h5M10 9H8m8 4H8m8 4H8"/></svg>',
+} as const;
+
+export { icons };
+
 export const faqData: FaqCategory[] = [
   {
     id: "presupuesto",
     title: "Presupuesto y Recursos Financieros",
     description: "Financiamiento, asignación de recursos y continuidad presupuestaria del SBAP.",
-    icon: "💰",
+    icon: icons.coins,
     questions: [
       {
         id: "pres-01",
@@ -61,7 +79,7 @@ export const faqData: FaqCategory[] = [
     id: "traspaso-bienes",
     title: "Traspaso de Bienes y Continuidad Institucional",
     description: "Transferencia de activos, convenios, comodatos y continuidad de proyectos.",
-    icon: "🏛️",
+    icon: icons.landmark,
     questions: [
       {
         id: "bien-01",
@@ -105,7 +123,7 @@ export const faqData: FaqCategory[] = [
     id: "condiciones-laborales",
     title: "Condiciones Laborales y Remuneraciones",
     description: "Turnos, jornadas, remuneraciones y condiciones contractuales del personal.",
-    icon: "⚖️",
+    icon: icons.scale,
     questions: [
       {
         id: "lab-01",
@@ -152,7 +170,7 @@ export const faqData: FaqCategory[] = [
     id: "dotacion-personal",
     title: "Dotación, Personal y Contrataciones",
     description: "Cantidad de personal, contrataciones, distribución regional y perfiles.",
-    icon: "👥",
+    icon: icons.users,
     questions: [
       {
         id: "dot-01",
@@ -190,7 +208,7 @@ export const faqData: FaqCategory[] = [
     id: "fiscalizacion",
     title: "Fiscalización y Nuevas Competencias",
     description: "Facultades de fiscalización, sanción y nuevas atribuciones del SBAP.",
-    icon: "🔍",
+    icon: icons.search,
     questions: [
       {
         id: "fisc-01",
@@ -231,7 +249,7 @@ export const faqData: FaqCategory[] = [
     id: "carrera-funcionaria",
     title: "Carrera Funcionaria y Desarrollo Profesional",
     description: "Calificaciones, ascensos, capacitación y desarrollo de carrera.",
-    icon: "📈",
+    icon: icons.trendingUp,
     questions: [
       {
         id: "carr-01",
@@ -270,7 +288,7 @@ export const faqData: FaqCategory[] = [
     id: "estructura-organizacion",
     title: "Estructura y Organización del SBAP",
     description: "Organigrama, direcciones regionales, gobernanza interna.",
-    icon: "🏗️",
+    icon: icons.network,
     questions: [
       {
         id: "estr-01",
@@ -306,7 +324,7 @@ export const faqData: FaqCategory[] = [
     id: "reglamentos-normativa",
     title: "Reglamentos y Marco Normativo",
     description: "Ley 21.600, reglamentos pendientes y marco legal del traspaso.",
-    icon: "📜",
+    icon: icons.scrollText,
     questions: [
       {
         id: "regl-01",
@@ -350,7 +368,7 @@ export const faqData: FaqCategory[] = [
     id: "infraestructura",
     title: "Infraestructura, Equipamiento y Conectividad",
     description: "Oficinas, vehículos, tecnología y conectividad en áreas protegidas.",
-    icon: "🏢",
+    icon: icons.building,
     questions: [
       {
         id: "infr-01",
@@ -388,7 +406,7 @@ export const faqData: FaqCategory[] = [
     id: "seguridad-salud",
     title: "Seguridad y Salud Laboral",
     description: "Riesgos en terreno, elementos de protección, protocolos de emergencia.",
-    icon: "🛡️",
+    icon: icons.shieldCheck,
     questions: [
       {
         id: "seg-01",
@@ -420,7 +438,7 @@ export const faqData: FaqCategory[] = [
     id: "areas-protegidas",
     title: "Gestión de Áreas Protegidas y Conservación",
     description: "Manejo de SNASPE, planes de manejo, conservación de biodiversidad.",
-    icon: "🌿",
+    icon: icons.leaf,
     questions: [
       {
         id: "area-01",
@@ -461,7 +479,7 @@ export const faqData: FaqCategory[] = [
     id: "participacion-comunitaria",
     title: "Participación Comunitaria y Pueblos Originarios",
     description: "Relación con comunidades locales, consulta indígena y gobernanza territorial.",
-    icon: "🤝",
+    icon: icons.handshake,
     questions: [
       {
         id: "part-01",

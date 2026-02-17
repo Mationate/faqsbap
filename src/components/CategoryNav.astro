@@ -21,7 +21,7 @@ const { categories } = Astro.props;
           class="nav-link flex items-center gap-2.5"
           data-nav-category={cat.id}
         >
-          <span class="text-base" aria-hidden="true">{cat.icon}</span>
+          <span class="w-5 h-5 shrink-0 text-current" aria-hidden="true" set:html={cat.icon} />
           <span class="truncate">{cat.title}</span>
           <span class="ml-auto text-xs text-gray-400 shrink-0">{cat.questions.length}</span>
         </a>
@@ -31,15 +31,15 @@ const { categories } = Astro.props;
 </nav>
 
 <!-- Mobile horizontal pills -->
-<div class="lg:hidden sticky top-16 z-40 bg-stone-50/95 backdrop-blur-sm border-b border-gray-200 -mx-4 px-4 py-3" id="nav-mobile-container">
-  <div class="flex gap-2 overflow-x-auto pb-1 scrollbar-hide" id="nav-mobile">
+<div class="lg:hidden sticky top-16 z-40 bg-stone-50/95 backdrop-blur-sm border-b border-gray-200 -mx-4 sm:-mx-6 px-4 sm:px-6 py-2.5" id="nav-mobile-container">
+  <div class="flex gap-1.5 overflow-x-auto pb-1 scrollbar-hide -mx-1 px-1" id="nav-mobile">
     {categories.map(cat => (
       <a
         href={`#${cat.id}`}
-        class="category-pill whitespace-nowrap shrink-0"
+        class="category-pill whitespace-nowrap shrink-0 flex items-center gap-1.5"
         data-nav-category={cat.id}
       >
-        <span aria-hidden="true">{cat.icon}</span>
+        <span class="w-3.5 h-3.5 shrink-0 text-current" aria-hidden="true" set:html={cat.icon} />
         <span>{cat.title.split(' ')[0]}</span>
       </a>
     ))}
