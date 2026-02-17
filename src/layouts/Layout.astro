@@ -18,7 +18,9 @@ const { title, description = "Preguntas frecuentes sobre el traspaso institucion
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
     <title>{title}</title>
   </head>
-  <body class="min-h-screen flex flex-col">
-    <slot />
+  <body>
+    <div class="min-h-screen flex flex-col overflow-x-hidden w-full max-w-[100vw]">
+      <slot />
+    </div>
   </body>
 </html>

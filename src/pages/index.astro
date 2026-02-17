@@ -18,7 +18,7 @@ const officialCount = faqData.reduce(
   <Hero />
 
   <!-- Stats bar -->
-  <div class="bg-stone-50 border-b border-gray-200">
+  <div class="w-full bg-stone-50 border-b border-gray-200">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-4">
       <div class="grid grid-cols-2 sm:flex sm:flex-wrap sm:justify-center gap-3 sm:gap-6 text-xs sm:text-sm text-gray-500">
         <div class="stat-item flex items-center gap-2">
@@ -41,8 +41,11 @@ const officialCount = faqData.reduce(
     </div>
   </div>
 
+  <!-- Mobile category nav (outside main to avoid sticky + overflow conflict on iOS) -->
+  <CategoryNav categories={faqData} mobile />
+
   <!-- Main content -->
-  <main id="preguntas" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10 overflow-x-hidden">
+  <main id="preguntas" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10">
     <div class="lg:grid lg:grid-cols-[260px_minmax(0,1fr)] lg:gap-10">
       <CategoryNav categories={faqData} />
 

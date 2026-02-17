@@ -16,7 +16,6 @@
   html {
     scroll-behavior: smooth;
     scroll-padding-top: 8rem;
-    overflow-x: hidden;
   }
 
   @media (min-width: 1024px) {
@@ -27,8 +26,18 @@
 
   body {
     @apply font-sans text-gray-800 bg-stone-50 antialiased;
-    overflow-x: hidden;
     -webkit-text-size-adjust: 100%;
+  }
+
+  /* Prevent any element from causing horizontal overflow */
+  main, section, footer, header {
+    max-width: 100%;
+  }
+
+  /* Safety: long words break instead of overflowing */
+  p, h1, h2, h3, h4, span, a {
+    overflow-wrap: break-word;
+    word-break: break-word;
   }
 
   /* SVG icon sizing — inherit container dimensions */
