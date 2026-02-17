@@ -153,7 +153,7 @@
   }
 
   .faq-item[open] {
-    @apply border-bosque-200 shadow-sm;
+    @apply border-bosque-300 bg-bosque-50 shadow-sm;
   }
 
   /* Stats bar animation */
