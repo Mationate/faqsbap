@@ -1,0 +1,47 @@
+---
+import type { FaqCategory } from '../data/faq';
+
+interface Props {
+  categories: FaqCategory[];
+}
+
+const { categories } = Astro.props;
+---
+
+<!-- Desktop sidebar -->
+<nav class="hidden lg:block sticky top-20 self-start" aria-label="Categorías">
+  <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3 px-4">
+    Categorías
+  </p>
+  <ul class="space-y-0.5" id="nav-desktop">
+    {categories.map(cat => (
+      <li>
+        <a
+          href={`#${cat.id}`}
+          class="nav-link flex items-center gap-2.5"
+          data-nav-category={cat.id}
+        >
+          <span class="text-base" aria-hidden="true">{cat.icon}</span>
+          <span class="truncate">{cat.title}</span>
+          <span class="ml-auto text-xs text-gray-400 shrink-0">{cat.questions.length}</span>
+        </a>
+      </li>
+    ))}
+  </ul>
+</nav>
+
+<!-- Mobile horizontal pills -->
+<div class="lg:hidden sticky top-16 z-40 bg-stone-50/95 backdrop-blur-sm border-b border-gray-200 -mx-4 px-4 py-3" id="nav-mobile-container">
+  <div class="flex gap-2 overflow-x-auto pb-1 scrollbar-hide" id="nav-mobile">
+    {categories.map(cat => (
+      <a
+        href={`#${cat.id}`}
+        class="category-pill whitespace-nowrap shrink-0"
+        data-nav-category={cat.id}
+      >
+        <span aria-hidden="true">{cat.icon}</span>
+        <span>{cat.title.split(' ')[0]}</span>
+      </a>
+    ))}
+  </div>
+</div>

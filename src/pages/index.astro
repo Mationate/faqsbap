@@ -1,0 +1,239 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import CategoryNav from '../components/CategoryNav.astro';
+import FaqSection from '../components/FaqSection.astro';
+import Footer from '../components/Footer.astro';
+import { faqData } from '../data/faq';
+
+const totalQuestions = faqData.reduce((sum, cat) => sum + cat.questions.length, 0);
+const officialCount = faqData.reduce(
+  (sum, cat) => sum + cat.questions.filter(q => q.isOfficial).length,
+  0
+);
+---
+<Layout title="Preguntas Frecuentes — Traspaso CONAF a SBAP">
+  <Header />
+  <Hero />
+
+  <!-- Stats bar -->
+  <div class="bg-stone-50 border-b border-gray-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+      <div class="flex flex-wrap justify-center gap-6 text-sm text-gray-500">
+        <div class="flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-bosque-500"></span>
+          <span><strong class="text-gray-800">{faqData.length}</strong> categorías</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-tierra-500"></span>
+          <span><strong class="text-gray-800">{totalQuestions}</strong> preguntas</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-cielo-400"></span>
+          <span><strong class="text-gray-800">{officialCount}</strong> respuestas oficiales</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-purple-400"></span>
+          <span><strong class="text-gray-800">16</strong> regiones consultadas</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main content -->
+  <main id="preguntas" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <div class="lg:grid lg:grid-cols-[260px_1fr] lg:gap-10">
+      <CategoryNav categories={faqData} />
+
+      <div class="space-y-12" id="faq-content">
+        <!-- Empty state -->
+        <div id="empty-state" class="hidden text-center py-16">
+          <div class="text-6xl mb-4">🔍</div>
+          <h3 class="text-xl font-serif font-bold text-gray-700 mb-2">
+            No se encontraron resultados
+          </h3>
+          <p class="text-gray-500 max-w-md mx-auto">
+            Intenta con otros términos de búsqueda. Puedes buscar por tema, región o artículo de ley.
+          </p>
+          <button
+            id="clear-search-btn"
+            class="mt-4 px-4 py-2 rounded-lg bg-bosque-500 text-white text-sm font-medium hover:bg-bosque-600 transition-colors"
+          >
+            Limpiar búsqueda
+          </button>
+        </div>
+
+        {faqData.map(category => (
+          <FaqSection category={category} />
+        ))}
+      </div>
+    </div>
+  </main>
+
+  <Footer />
+</Layout>
+
+<script>
+  // ── Helpers ──
+  function normalize(str: string): string {
+    return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+  }
+
+  function debounce<T extends (...args: unknown[]) => void>(fn: T, ms: number): T {
+    let timer: ReturnType<typeof setTimeout>;
+    return ((...args: unknown[]) => {
+      clearTimeout(timer);
+      timer = setTimeout(() => fn(...args), ms);
+    }) as T;
+  }
+
+  // ── DOM refs ──
+  const searchInput = document.getElementById('faq-search') as HTMLInputElement;
+  const clearBtn = document.getElementById('search-clear') as HTMLButtonElement;
+  const clearSearchBtn = document.getElementById('clear-search-btn') as HTMLButtonElement;
+  const searchStatus = document.getElementById('search-status') as HTMLDivElement;
+  const emptyState = document.getElementById('empty-state') as HTMLDivElement;
+  const faqItems = document.querySelectorAll<HTMLDetailsElement>('.faq-item');
+  const faqSections = document.querySelectorAll<HTMLElement>('.faq-category');
+  const navLinks = document.querySelectorAll<HTMLAnchorElement>('[data-nav-category]');
+
+  // ── Search ──
+  function performSearch(query: string) {
+    const normalizedQuery = normalize(query.trim());
+    const isSearching = normalizedQuery.length > 0;
+
+    clearBtn.classList.toggle('hidden', !isSearching);
+
+    let visibleCount = 0;
+
+    faqItems.forEach(item => {
+      if (!isSearching) {
+        item.classList.remove('hidden');
+        item.open = false;
+        visibleCount++;
+        return;
+      }
+
+      const questionText = normalize(
+        item.querySelector('.faq-question-text')?.textContent ?? ''
+      );
+      const answerText = normalize(
+        item.querySelector('.faq-answer-text')?.textContent ?? ''
+      );
+
+      const matches = questionText.includes(normalizedQuery) || answerText.includes(normalizedQuery);
+
+      item.classList.toggle('hidden', !matches);
+      if (matches) {
+        item.open = true;
+        visibleCount++;
+      }
+    });
+
+    // Show/hide sections based on visible items
+    faqSections.forEach(section => {
+      const visibleItems = section.querySelectorAll('.faq-item:not(.hidden)');
+      section.classList.toggle('hidden', visibleItems.length === 0);
+    });
+
+    // Search status
+    if (isSearching) {
+      searchStatus.textContent = visibleCount === 0
+        ? ''
+        : `${visibleCount} ${visibleCount === 1 ? 'resultado' : 'resultados'} para "${query.trim()}"`;
+      searchStatus.classList.remove('hidden');
+    } else {
+      searchStatus.classList.add('hidden');
+    }
+
+    // Empty state
+    emptyState.classList.toggle('hidden', visibleCount > 0 || !isSearching);
+  }
+
+  const debouncedSearch = debounce((e: unknown) => {
+    const event = e as Event;
+    performSearch((event.target as HTMLInputElement).value);
+  }, 300);
+
+  searchInput.addEventListener('input', debouncedSearch);
+
+  clearBtn.addEventListener('click', () => {
+    searchInput.value = '';
+    performSearch('');
+    searchInput.focus();
+  });
+
+  clearSearchBtn.addEventListener('click', () => {
+    searchInput.value = '';
+    performSearch('');
+    searchInput.focus();
+  });
+
+  // ── Scroll spy ──
+  const observer = new IntersectionObserver(
+    entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.getAttribute('data-category');
+          if (id) setActiveNav(id);
+        }
+      });
+    },
+    { rootMargin: '-100px 0px -60% 0px', threshold: 0 }
+  );
+
+  faqSections.forEach(section => observer.observe(section));
+
+  function setActiveNav(categoryId: string) {
+    navLinks.forEach(link => {
+      const isActive = link.getAttribute('data-nav-category') === categoryId;
+      link.classList.toggle('active', isActive);
+
+      // Scroll mobile nav pill into view
+      if (isActive && link.closest('#nav-mobile')) {
+        link.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      }
+    });
+
+    // Update URL hash without scrolling
+    if (history.replaceState) {
+      history.replaceState(null, '', `#${categoryId}`);
+    }
+  }
+
+  // ── Hash navigation ──
+  function handleHash() {
+    const hash = window.location.hash.slice(1);
+    if (hash) {
+      const target = document.getElementById(hash);
+      if (target) {
+        setTimeout(() => {
+          target.scrollIntoView({ behavior: 'smooth' });
+        }, 100);
+      }
+    }
+  }
+
+  handleHash();
+  window.addEventListener('hashchange', handleHash);
+
+  // ── Smooth scroll for nav links ──
+  navLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const categoryId = link.getAttribute('data-nav-category');
+      if (categoryId) {
+        const target = document.getElementById(categoryId);
+        if (target) {
+          // Clear search if active
+          if (searchInput.value) {
+            searchInput.value = '';
+            performSearch('');
+          }
+          target.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+    });
+  });
+</script>

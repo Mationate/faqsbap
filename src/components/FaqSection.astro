@@ -1,0 +1,43 @@
+---
+import FaqItem from './FaqItem.astro';
+import type { FaqCategory } from '../data/faq';
+
+interface Props {
+  category: FaqCategory;
+}
+
+const { category } = Astro.props;
+---
+<section
+  id={category.id}
+  class="faq-category scroll-mt-20"
+  data-category={category.id}
+>
+  <div class="mb-6">
+    <div class="flex items-center gap-3 mb-2">
+      <span class="text-2xl" aria-hidden="true">{category.icon}</span>
+      <h2 class="text-2xl font-serif font-bold text-gray-900">
+        {category.title}
+      </h2>
+    </div>
+    <p class="text-gray-500 ml-11">
+      {category.description}
+    </p>
+    <p class="text-xs text-gray-400 ml-11 mt-1">
+      {category.questions.length} {category.questions.length === 1 ? 'pregunta' : 'preguntas'}
+    </p>
+  </div>
+
+  <div class="space-y-3">
+    {category.questions.map(q => (
+      <FaqItem
+        id={q.id}
+        question={q.question}
+        answer={q.answer}
+        regions={q.regions}
+        relatedArticles={q.relatedArticles}
+        isOfficial={q.isOfficial}
+      />
+    ))}
+  </div>
+</section>
