@@ -49,7 +49,7 @@ const officialCount = faqData.reduce(
     <div class="lg:grid lg:grid-cols-[260px_minmax(0,1fr)] lg:gap-10">
       <CategoryNav categories={faqData} />
 
-      <div class="space-y-12 min-w-0" id="faq-content">
+      <div class="space-y-16 sm:space-y-12 min-w-0" id="faq-content">
         <!-- Empty state -->
         <div id="empty-state" class="hidden text-center py-16">
           <div class="w-16 h-16 mx-auto mb-4 text-gray-300">
@@ -293,9 +293,16 @@ const officialCount = faqData.reduce(
       const isActive = link.getAttribute('data-nav-category') === categoryId;
       link.classList.toggle('active', isActive);
 
-      // Scroll mobile nav pill into view
+      // Scroll mobile nav pill into view (using scrollLeft to avoid iOS vertical scroll hijack)
       if (isActive && link.closest('#nav-mobile')) {
-        link.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        const container = document.getElementById('nav-mobile');
+        if (container) {
+          const pillLeft = (link as HTMLElement).offsetLeft;
+          const pillWidth = (link as HTMLElement).offsetWidth;
+          const containerWidth = container.offsetWidth;
+          const targetScroll = pillLeft - (containerWidth / 2) + (pillWidth / 2);
+          container.scrollTo({ left: targetScroll, behavior: 'smooth' });
+        }
       }
     });
 

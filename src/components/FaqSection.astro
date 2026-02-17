@@ -10,17 +10,17 @@ const { category } = Astro.props;
 ---
 <section
   id={category.id}
-  class="faq-category scroll-mt-32 lg:scroll-mt-20"
+  class="faq-category scroll-mt-32 lg:scroll-mt-20 pt-6 sm:pt-0 first:pt-0 border-t border-gray-200 sm:border-0 first:border-0"
   data-category={category.id}
 >
-  <div class="mb-6">
-    <div class="flex items-center gap-2.5 sm:gap-3 mb-2">
+  <div class="mb-5 sm:mb-6">
+    <div class="flex items-center gap-2.5 sm:gap-3 mb-1.5 sm:mb-2">
       <span class="w-6 h-6 sm:w-7 sm:h-7 shrink-0 text-bosque-600" aria-hidden="true" set:html={category.icon} />
-      <h2 class="text-xl sm:text-2xl font-bold text-gray-900">
+      <h2 class="text-lg sm:text-2xl font-bold text-gray-900">
         {category.title}
       </h2>
     </div>
-    <p class="text-sm sm:text-base text-gray-500 ml-[34px] sm:ml-10">
+    <p class="text-sm text-gray-500 ml-[34px] sm:ml-10">
       {category.description}
     </p>
     <p class="text-xs text-gray-400 ml-[34px] sm:ml-10 mt-1">
