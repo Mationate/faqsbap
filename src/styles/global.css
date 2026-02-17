@@ -71,8 +71,8 @@
 
 @layer components {
   .category-pill {
-    @apply px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium transition-all duration-200;
-    @apply bg-white text-gray-600 border border-gray-200;
+    @apply px-3.5 py-2 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium transition-all duration-200;
+    @apply bg-white text-gray-600 border border-gray-200 shadow-sm;
     @apply hover:border-bosque-300 hover:text-bosque-700 hover:bg-bosque-50;
   }
 
